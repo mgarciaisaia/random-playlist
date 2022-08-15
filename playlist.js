@@ -3,15 +3,20 @@ var playlistGenerator = function() {
   function _generateRandomPlaylist() {
     var playlist = [];
     for(var trackIndex = 0; trackIndex < _playlistOptions.length; trackIndex++) {
-      var trackVersions = _playlistOptions[trackIndex];
+      var track = _playlistOptions[trackIndex];
+      var trackVersions = track.versions;
       var chosenVersion = trackVersions[Math.floor(Math.random() * trackVersions.length)];
-      playlist.push(chosenVersion)
+      var trackInfo = {
+        title: chosenVersion.title || track.title,
+        file: chosenVersion.file
+      }
+      playlist.push(trackInfo)
     }
     return playlist;
   }
   function _generateAudioSourceElement(track, trackIndex) {
     var element = document.createElement("source");
-    element.setAttribute("src", track);
+    element.setAttribute("src", track.file);
     element.dataset.trackNumber = trackIndex + 1;
     return element;
   }
@@ -45,7 +50,7 @@ var playlistGenerator = function() {
     trackTitleLink.classList.add("playlist-track");
     trackTitleLink.href = "#";
     trackTitleLink.dataset.playTrack = trackNumber;
-    trackTitleLink.textContent = track; // FIXME: extract title from track object
+    trackTitleLink.textContent = track.title;
     
     trackTitle.appendChild(trackTitleLink);
 
@@ -55,7 +60,7 @@ var playlistGenerator = function() {
 
     return row;
   }
-  function setAudioPlaylist(tracks) {
+  function _setAudioPlaylist(tracks) {
     var player = document.querySelector('#audio');
     var playlist = document.querySelector('.play-list');
     for(var trackIndex = 0; trackIndex < tracks.length; trackIndex++) {
@@ -68,8 +73,8 @@ var playlistGenerator = function() {
   }
   var initPlaylist = function() {
     var playlist = _generateRandomPlaylist();
-    setAudioPlaylist(playlist);
-    document.querySelector('#debug').textContent = playlist.join("\n")
+    _setAudioPlaylist(playlist);
+    document.querySelector('#debug').textContent = JSON.stringify(playlist, null, 2);
   }
   return {
     initPlaylist: initPlaylist

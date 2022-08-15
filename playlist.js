@@ -1,22 +1,5 @@
 var playlistGenerator = function() {
   "use strict";
-  var _playlistOptions = [
-    [
-      "audios/track01-version01.mp3",
-      "audios/track01-version02.mp3",
-      "audios/track01-version03.mp3"
-    ],
-    [
-      "audios/track02-version01.mp3",
-      "audios/track02-version02.mp3",
-      "audios/track02-version03.mp3",
-      "audios/track02-version04.mp3"
-    ],
-    [
-      "audios/track03-version01.mp3",
-      "audios/track03-version02.mp3"
-    ]
-  ];
   function _generateRandomPlaylist() {
     var playlist = [];
     for(var trackIndex = 0; trackIndex < _playlistOptions.length; trackIndex++) {

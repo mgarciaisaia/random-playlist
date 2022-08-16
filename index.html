@@ -23,6 +23,9 @@
         var newHash = Math.floor(Math.random() * (2**24)).toString(16);
         window.location.hash = newHash;
       }
+      window.addEventListener('hashchange', function() {
+        window.location.reload();
+      })
     </script>
     <script type="text/javascript">
       var _playlistOptions = [

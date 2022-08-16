@@ -1,7 +1,12 @@
 var playlistGenerator = function() {
   "use strict";
   function _generateRandomPlaylist(seed) {
-    var random = alea ? alea(seed) : Math.random;
+    var random = null;
+    if (typeof alea === 'function') {
+      random = alea;
+    } else {
+      random = Math.random;
+    }
     var playlist = [];
     for(var trackIndex = 0; trackIndex < _playlistOptions.length; trackIndex++) {
       var track = _playlistOptions[trackIndex];

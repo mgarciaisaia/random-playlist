@@ -79,11 +79,21 @@ var playlistGenerator = function() {
       playlist.appendChild(playlistRowElement);
     }
   }
+  function _generateShareableUrl(seed) {
+    var shareableUrl = window.location.href;
+    if(!validSeedFromWindowHash()) {
+      if(shareableUrl.indexOf('#') < 0) {
+        shareableUrl += '#'
+      }
+      shareableUrl += seed;
+    }
+    document.querySelector('.share-play-list').textContent = shareableUrl;
+  }
   var initPlaylist = function() {
-    var seed = window.location.hash.substring(1);
+    var seed = playlistRandomSeed;
     var playlist = _generateRandomPlaylist(seed);
     _setAudioPlaylist(playlist);
-    document.querySelector('.share-play-list').textContent = window.location.href;
+    _generateShareableUrl(seed);
     document.querySelector('#debug').textContent = JSON.stringify(playlist, null, 2);
   }
   return {

@@ -8,20 +8,21 @@
     <link rel="stylesheet" href="./mezclas.css">
     <script src="./seedrandom-3.0.5-alea.min.js"></script>
     <script type="text/javascript">
-      function invalidWindowHash() {
+      function validSeedFromWindowHash() {
         var hash = window.location.hash;
         if (!hash) {
-          return true;
+          return null;
         }
         var intHash = parseInt(window.location.hash.substr(1),16);
         if (!intHash || intHash < 0 || intHash >= 2**24) {
-          return true;
+          return null;
         }
-        return false;
+        return intHash;
       }
-      if(invalidWindowHash()) {
-        var newHash = Math.floor(Math.random() * (2**24)).toString(16);
-        window.location.hash = newHash;
+      var playlistRandomSeed = null;
+      if(!(playlistRandomSeed = validSeedFromWindowHash())) {
+        playlistRandomSeed = Math.floor(Math.random() * (2**24)).toString(16);
+        window.location.hash = '';
       }
       window.addEventListener('hashchange', function() {
         window.location.reload();

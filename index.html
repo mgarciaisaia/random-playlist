@@ -6,6 +6,24 @@
     <meta content="width=device-width, initial-scale=1" name="viewport">
     <meta charset="utf-8">
     <link rel="stylesheet" href="./mezclas.css">
+    <script src="./seedrandom-3.0.5-alea.min.js"></script>
+    <script type="text/javascript">
+      function invalidWindowHash() {
+        var hash = window.location.hash;
+        if (!hash) {
+          return true;
+        }
+        var intHash = parseInt(window.location.hash.substr(1),16);
+        if (!intHash || intHash < 0 || intHash >= 2**24) {
+          return true;
+        }
+        return false;
+      }
+      if(invalidWindowHash()) {
+        var newHash = Math.floor(Math.random() * (2**24)).toString(16);
+        window.location.hash = newHash;
+      }
+    </script>
     <script type="text/javascript">
       var _playlistOptions = [
         {
@@ -83,6 +101,8 @@
       <div class="play-list">
     
       </div>
+
+      <div class="share-play-list"></div>
     
       <div><code id="debug"></code></div>
     </div>

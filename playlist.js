@@ -1,11 +1,12 @@
 var playlistGenerator = function() {
   "use strict";
-  function _generateRandomPlaylist() {
+  function _generateRandomPlaylist(seed) {
+    var random = alea ? alea(seed) : Math.random;
     var playlist = [];
     for(var trackIndex = 0; trackIndex < _playlistOptions.length; trackIndex++) {
       var track = _playlistOptions[trackIndex];
       var trackVersions = track.versions;
-      var chosenVersion = trackVersions[Math.floor(Math.random() * trackVersions.length)];
+      var chosenVersion = trackVersions[Math.floor(random() * trackVersions.length)];
       var trackInfo = {
         title: chosenVersion.title || track.title,
         file: chosenVersion.file
@@ -72,8 +73,10 @@ var playlistGenerator = function() {
     }
   }
   var initPlaylist = function() {
-    var playlist = _generateRandomPlaylist();
+    var seed = window.location.hash.substring(1);
+    var playlist = _generateRandomPlaylist(seed);
     _setAudioPlaylist(playlist);
+    document.querySelector('.share-play-list').textContent = window.location.href;
     document.querySelector('#debug').textContent = JSON.stringify(playlist, null, 2);
   }
   return {

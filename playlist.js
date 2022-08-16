@@ -3,7 +3,7 @@ var playlistGenerator = function() {
   function _generateRandomPlaylist(seed) {
     var random = null;
     if (typeof alea === 'function') {
-      random = alea;
+      random = alea(seed);
     } else {
       random = Math.random;
     }
@@ -11,7 +11,9 @@ var playlistGenerator = function() {
     for(var trackIndex = 0; trackIndex < _playlistOptions.length; trackIndex++) {
       var track = _playlistOptions[trackIndex];
       var trackVersions = track.versions;
-      var chosenVersion = trackVersions[Math.floor(random() * trackVersions.length)];
+      var randomNumber = random();
+      var randomIndex = Math.floor(randomNumber * trackVersions.length);
+      var chosenVersion = trackVersions[randomIndex];
       var trackInfo = {
         title: chosenVersion.title || track.title,
         file: chosenVersion.file
